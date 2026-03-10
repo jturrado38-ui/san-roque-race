@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>San Roque Race 2026</title>
+
+<style>
+
+body{
+font-family: Arial;
+margin:0;
+background:#f5f5f5;
+}
+
+header{
+background:#c1121f;
+color:white;
+text-align:center;
+padding:60px;
+}
+
+header h1{
+font-size:50px;
+margin:0;
+}
+
+nav{
+background:#222;
+padding:15px;
+text-align:center;
+}
+
+nav a{
+color:white;
+margin:15px;
+text-decoration:none;
+font-weight:bold;
+}
+
+section{
+max-width:1000px;
+margin:auto;
+background:white;
+padding:40px;
+margin-top:20px;
+border-radius:10px;
+}
+
+#contador{
+font-size:30px;
+text-align:center;
+color:#c1121f;
+}
+
+input{
+width:100%;
+padding:12px;
+margin-top:10px;
+}
+
+button{
+background:#2a9d8f;
+color:white;
+border:none;
+padding:15px 25px;
+font-size:18px;
+border-radius:5px;
+cursor:pointer;
+}
+
+button:hover{
+background:#1f7d72;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+}
+
+td,th{
+border:1px solid #ddd;
+padding:10px;
+text-align:center;
+}
+
+footer{
+text-align:center;
+padding:30px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>🏃 San Roque Race</h1>
+<p>Primera edición • 12 Agosto 2026</p>
+<p>Pinilla de la Valdería</p>
+
+</header>
+
+<nav>
+
+<a href="#info">Información</a>
+<a href="#contador">Cuenta atrás</a>
+<a href="#inscripcion">Inscripción</a>
+<a href="#pago">Pago</a>
+<a href="#inscritos">Inscritos</a>
+
+</nav>
+
+<section id="info">
+
+<h2>📅 Información</h2>
+
+<p><b>Distancia:</b> 5 km</p>
+<p><b>Fecha:</b> 12 agosto 2026</p>
+<p><b>Lugar:</b> Pinilla de la Valdería</p>
+<p><b>Precio:</b> 8 €</p>
+
+<p>¡Participa en la primera edición de la San Roque Race!</p>
+
+</section>
+
+<section>
+
+<h2>⏳ Cuenta atrás para la carrera</h2>
+
+<div id="contador"></div>
+
+</section>
+
+<section id="inscripcion">
+
+<h2>📝 Inscripción</h2>
+
+<form id="formulario">
+
+<input type="text" id="nombre" placeholder="Nombre" required>
+
+<input type="text" id="apellidos" placeholder="Apellidos" required>
+
+<input type="email" id="email" placeholder="Email" required>
+
+<input type="number" id="edad" placeholder="Edad" required>
+
+<br><br>
+
+<button type="submit">Inscribirme</button>
+
+</form>
+
+<p id="mensaje"></p>
+
+</section>
+
+<section id="pago">
+
+<h2>💳 Pago de inscripción</h2>
+
+<p>La inscripción cuesta <b>8 €</b>.</p>
+
+<h3>Pago por Bizum</h3>
+
+<p>Número: <b>XXXXXX</b></p>
+
+<p>Concepto: <b>San Roque Race + Nombre</b></p>
+
+<h3>Transferencia bancaria</h3>
+
+<p>Titular: <b>San Roque Race</b></p>
+
+<p>IBAN: <b>ESXX XXXX XXXX XXXX XXXX</b></p>
+
+<p>Concepto: <b>San Roque Race + Nombre</b></p>
+
+<p>Una vez recibido el pago tu inscripción quedará confirmada.</p>
+
+</section>
+
+<section id="inscritos">
+
+<h2>👥 Lista de inscritos</h2>
+
+<table>
+
+<tr>
+<th>Dorsal</th>
+<th>Nombre</th>
+</tr>
+
+<tbody id="tabla"></tbody>
+
+</table>
+
+</section>
+
+<footer>
+
+<p>© 2026 San Roque Race</p>
+
+</footer>
+
+<script>
+
+let dorsal=0
+
+let tabla=document.getElementById("tabla")
+
+document.getElementById("formulario").addEventListener("submit",function(e){
+
+e.preventDefault()
+
+dorsal++
+
+let nombre=document.getElementById("nombre").value
+let apellidos=document.getElementById("apellidos").value
+
+let fila="<tr><td>"+dorsal+"</td><td>"+nombre+" "+apellidos+"</td></tr>"
+
+tabla.innerHTML+=fila
+
+document.getElementById("mensaje").innerHTML=
+"✅ Inscripción registrada. Tu dorsal provisional es: "+dorsal+
+". Realiza el pago por Bizum o transferencia para confirmar.";
+
+})
+
+let fechaCarrera=new Date("Aug 12, 2026 18:00:00").getTime()
+
+let x=setInterval(function(){
+
+let ahora=new Date().getTime()
+
+let distancia=fechaCarrera-ahora
+
+let dias=Math.floor(distancia/(1000*60*60*24))
+let horas=Math.floor((distancia%(1000*60*60*24))/(1000*60*60))
+let minutos=Math.floor((distancia%(1000*60*60))/(1000*60))
+let segundos=Math.floor((distancia%(1000*60))/1000)
+
+document.getElementById("contador").innerHTML=
+dias+"d "+horas+"h "+minutos+"m "+segundos+"s"
+
+},1000)
+
+</script>
+
+</body>
+</html>
