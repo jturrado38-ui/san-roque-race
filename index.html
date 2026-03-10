@@ -7,16 +7,16 @@
 <style>
 
 body{
-font-family: Arial;
+font-family:Arial;
 margin:0;
-background:#f5f5f5;
+background:#f4f4f4;
 }
 
 header{
-background:#c1121f;
+background:linear-gradient(135deg,#c1121f,#780000);
 color:white;
 text-align:center;
-padding:60px;
+padding:60px 20px;
 }
 
 header h1{
@@ -24,10 +24,16 @@ font-size:50px;
 margin:0;
 }
 
+header p{
+font-size:20px;
+}
+
 nav{
-background:#222;
+background:#111;
 padding:15px;
 text-align:center;
+position:sticky;
+top:0;
 }
 
 nav a{
@@ -37,25 +43,44 @@ text-decoration:none;
 font-weight:bold;
 }
 
+nav a:hover{
+color:#2a9d8f;
+}
+
 section{
 max-width:1000px;
 margin:auto;
 background:white;
 padding:40px;
-margin-top:20px;
-border-radius:10px;
+margin-top:25px;
+border-radius:12px;
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+h2{
+text-align:center;
 }
 
 #contador{
-font-size:30px;
+font-size:35px;
 text-align:center;
 color:#c1121f;
+font-weight:bold;
+}
+
+#contadorInscritos{
+font-size:22px;
+text-align:center;
+color:#2a9d8f;
+margin-top:10px;
 }
 
 input{
 width:100%;
 padding:12px;
 margin-top:10px;
+border-radius:5px;
+border:1px solid #ccc;
 }
 
 button{
@@ -64,8 +89,9 @@ color:white;
 border:none;
 padding:15px 25px;
 font-size:18px;
-border-radius:5px;
+border-radius:6px;
 cursor:pointer;
+margin-top:10px;
 }
 
 button:hover{
@@ -84,9 +110,34 @@ padding:10px;
 text-align:center;
 }
 
+th{
+background:#f1f1f1;
+}
+
+.instagram{
+text-align:center;
+margin-top:20px;
+}
+
+.instagram a{
+background:#e1306c;
+color:white;
+padding:12px 20px;
+border-radius:6px;
+text-decoration:none;
+font-weight:bold;
+}
+
+.instagram a:hover{
+background:#c82361;
+}
+
 footer{
 text-align:center;
 padding:30px;
+margin-top:40px;
+background:#222;
+color:white;
 }
 
 </style>
@@ -99,6 +150,7 @@ padding:30px;
 
 <h1>🏃 San Roque Race</h1>
 <p>Primera edición • 12 Agosto 2026</p>
+<p>🕖 Salida: 19:00</p>
 <p>Pinilla de la Valdería</p>
 
 </header>
@@ -119,6 +171,7 @@ padding:30px;
 
 <p><b>Distancia:</b> 5 km</p>
 <p><b>Fecha:</b> 12 agosto 2026</p>
+<p><b>Hora de salida:</b> 19:00</p>
 <p><b>Lugar:</b> Pinilla de la Valdería</p>
 <p><b>Precio:</b> 8 €</p>
 
@@ -147,8 +200,6 @@ padding:30px;
 <input type="email" id="email" placeholder="Email" required>
 
 <input type="number" id="edad" placeholder="Edad" required>
-
-<br><br>
 
 <button type="submit">Inscribirme</button>
 
@@ -186,6 +237,10 @@ padding:30px;
 
 <h2>👥 Lista de inscritos</h2>
 
+<div id="contadorInscritos">
+0 inscritos
+</div>
+
 <table>
 
 <tr>
@@ -199,6 +254,20 @@ padding:30px;
 
 </section>
 
+<section>
+
+<h2>📱 Síguenos en Instagram</h2>
+
+<div class="instagram">
+
+<a href="https://instagram.com/pinilla_de_la_valderia" target="_blank">
+📸 @pinilla_de_la_valderia
+</a>
+
+</div>
+
+</section>
+
 <footer>
 
 <p>© 2026 San Roque Race</p>
@@ -208,8 +277,8 @@ padding:30px;
 <script>
 
 let dorsal=0
-
 let tabla=document.getElementById("tabla")
+let contador=document.getElementById("contadorInscritos")
 
 document.getElementById("formulario").addEventListener("submit",function(e){
 
@@ -224,15 +293,17 @@ let fila="<tr><td>"+dorsal+"</td><td>"+nombre+" "+apellidos+"</td></tr>"
 
 tabla.innerHTML+=fila
 
+contador.innerHTML=dorsal+" inscritos"
+
 document.getElementById("mensaje").innerHTML=
 "✅ Inscripción registrada. Tu dorsal provisional es: "+dorsal+
-". Realiza el pago por Bizum o transferencia para confirmar.";
+". Realiza el pago para confirmar tu plaza.";
 
 })
 
-let fechaCarrera=new Date("Aug 12, 2026 18:00:00").getTime()
+let fechaCarrera=new Date("Aug 12, 2026 19:00:00").getTime()
 
-let x=setInterval(function(){
+setInterval(function(){
 
 let ahora=new Date().getTime()
 
