@@ -21,7 +21,7 @@ padding:50px;
 }
 
 header img{
-width:300px;
+width:250px;
 margin-top:20px;
 }
 
@@ -58,12 +58,6 @@ text-align:center;
 color:#c1121f;
 }
 
-#contadorInscritos{
-text-align:center;
-font-size:20px;
-margin-bottom:20px;
-}
-
 input{
 width:100%;
 padding:12px;
@@ -74,14 +68,17 @@ button{
 background:#2a9d8f;
 color:white;
 border:none;
-padding:12px 20px;
-font-size:16px;
+padding:10px 18px;
 border-radius:5px;
 cursor:pointer;
 }
 
 button:hover{
 background:#1f7d72;
+}
+
+.confirmar{
+background:#e76f51;
 }
 
 table{
@@ -100,10 +97,6 @@ th{
 background:#eee;
 }
 
-.confirmar{
-background:#e76f51;
-}
-
 .instagram{
 text-align:center;
 margin-top:20px;
@@ -112,7 +105,7 @@ margin-top:20px;
 .instagram a{
 background:#e1306c;
 color:white;
-padding:12px 20px;
+padding:10px 20px;
 border-radius:5px;
 text-decoration:none;
 }
@@ -125,6 +118,11 @@ padding:25px;
 margin-top:40px;
 }
 
+#adminpanel{
+text-align:center;
+margin-bottom:20px;
+}
+
 </style>
 
 </head>
@@ -134,7 +132,6 @@ margin-top:40px;
 <header>
 
 <h1>🏃 San Roque Race 2026</h1>
-
 <p>Pinilla de la Valdería</p>
 <p>12 Agosto 2026 • 19:00</p>
 
@@ -205,7 +202,7 @@ margin-top:40px;
 
 <p><b>Concepto:</b> San Roque Race + Nombre</p>
 
-<p><b>Transferencia</b></p>
+<p><b>Transferencia:</b></p>
 
 <p>IBAN: ES91 2095 5077 9091 2197 9501</p>
 
@@ -222,7 +219,7 @@ margin-top:40px;
 <tr>
 <th>Dorsal</th>
 <th>Nombre</th>
-<th>Confirmar</th>
+<th id="colConfirmar" style="display:none">Confirmar</th>
 </tr>
 
 <tbody id="tablaPendientes"></tbody>
@@ -245,6 +242,20 @@ margin-top:40px;
 <tbody id="tablaConfirmados"></tbody>
 
 </table>
+
+</section>
+
+<section>
+
+<h2>Panel administrador</h2>
+
+<div id="adminpanel">
+
+<input type="password" id="adminpass" placeholder="Clave administrador">
+
+<button onclick="activarAdmin()">Entrar</button>
+
+</div>
 
 </section>
 
@@ -273,10 +284,31 @@ Instagram @pinilla_de_la_valderia
 <script>
 
 let dorsal=0
+let admin=false
 
 let tablaPendientes=document.getElementById("tablaPendientes")
 let tablaConfirmados=document.getElementById("tablaConfirmados")
 let contador=document.getElementById("contadorInscritos")
+
+function activarAdmin(){
+
+let pass=document.getElementById("adminpass").value
+
+if(pass=="sanroque2026"){
+
+admin=true
+
+alert("Modo administrador activado")
+
+document.getElementById("colConfirmar").style.display="table-cell"
+
+}else{
+
+alert("Clave incorrecta")
+
+}
+
+}
 
 document.getElementById("formulario").addEventListener("submit",function(e){
 
@@ -289,15 +321,25 @@ let apellidos=document.getElementById("apellidos").value
 
 let fila=document.createElement("tr")
 
+let boton=""
+
+if(admin){
+
+boton="<button class='confirmar' onclick='confirmar(this)'>Confirmar</button>"
+
+}
+
 fila.innerHTML=
+
 "<td>"+dorsal+"</td>"+
+
 "<td>"+nombre+" "+apellidos+"</td>"+
-"<td><button class='confirmar' onclick='confirmar(this)'>Confirmar pago</button></td>"
+
+"<td>"+boton+"</td>"
 
 tablaPendientes.appendChild(fila)
 
-document.getElementById("mensaje").innerHTML=
-"Preinscripción registrada. Realiza el pago para confirmar."
+document.getElementById("mensaje").innerHTML="Preinscripción registrada. Realiza el pago."
 
 })
 
@@ -332,6 +374,7 @@ let minutos=Math.floor((distancia%(1000*60*60))/(1000*60))
 let segundos=Math.floor((distancia%(1000*60))/1000)
 
 document.getElementById("contador").innerHTML=
+
 dias+"d "+horas+"h "+minutos+"m "+segundos+"s"
 
 },1000)
